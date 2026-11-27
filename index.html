@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="屏幕沉浸 VS 空间沉浸：从《鳌山暝色图》到「巴黎 1874」沉浸式 VR 展览的交互导览">
+  <meta name="theme-color" content="#fbe9f1">
+  <title>屏幕沉浸 VS 空间沉浸 · 交互导览</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div class="brand-copy">
+        <h1>屏幕沉浸 <em>VS</em> 空间沉浸</h1>
+        <p class="brand-sub">艺术观察 <span>/</span> ART &amp; PERCEPTION</p>
+      </div>
+    </div>
+    <nav class="chapter-nav" id="chapterNav" aria-label="章节导航">
+      <button class="chapter-chip" type="button" data-target="0">观看模式</button>
+      <button class="chapter-chip" type="button" data-target="2">视点状态</button>
+      <button class="chapter-chip" type="button" data-target="3">感官通道</button>
+      <button class="chapter-chip" type="button" data-target="4">在现方式</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="intro" aria-labelledby="introTitle">
+      <div class="intro-copy">
+        <p class="eyebrow">交互导览 · 6 页图像 / 4 个比较维度</p>
+        <h2 id="introTitle">在画外观看，<br>还是走入画中？</h2>
+        <p class="intro-text">从《鳌山暝色图》到「巴黎 1874」沉浸式 VR 展览，看技术如何改变我们与艺术相遇的方式。用键盘、缩略图或下方对照表，自由探索两种沉浸体验的差异。</p>
+      </div>
+      <div class="intro-actions">
+        <button class="pill-btn" id="autoplayBtn" type="button" aria-pressed="false"><span class="btn-icon" aria-hidden="true">▶</span><span id="autoplayLabel">自动播放</span></button>
+        <button class="pill-btn ghost" id="fullscreenBtn" type="button"><span class="btn-icon" aria-hidden="true">⛶</span>全屏浏览</button>
+      </div>
+    </section>
+
+    <section class="viewer" aria-label="六页图像导览">
+      <div class="viewer-top">
+        <div class="slide-meta">
+          <span class="slide-index" id="slideIndex">01 / 06</span>
+          <span class="slide-chapter" id="slideChapter">观看模式</span>
+        </div>
+        <button class="text-btn" id="zoomBtn" type="button">⤢ 放大查看</button>
+      </div>
+
+      <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+
+      <div class="stage" id="stage">
+        <button class="nav-arrow prev" id="prevBtn" type="button" aria-label="上一页">‹</button>
+        <figure class="stage-figure" id="stageFigure">
+          <img id="stageImage" src="./assets/slide-01.png" alt="第 1 页：在画外观看，还是走入画中？" draggable="false">
+          <button class="zoom-hint" id="zoomHint" type="button" aria-label="放大查看当前图像">⤢ 点击放大</button>
+        </figure>
+        <button class="nav-arrow next" id="nextBtn" type="button" aria-label="下一页">›</button>
+      </div>
+
+      <div class="caption" aria-live="polite">
+        <p class="caption-kicker" id="captionKicker">导览 · 2 种观看模式 / 4 个比较维度</p>
+        <h3 id="captionTitle">在画外观看，还是走入画中？</h3>
+        <p class="caption-note" id="captionNote">同是沉浸，观看却不同。从观看边界到再现方式，理解两种体验的关键差异。</p>
+      </div>
+
+      <div class="thumbs" id="thumbs" role="tablist" aria-label="页面缩略图"></div>
+    </section>
+
+    <section class="compare" id="compare" aria-labelledby="compareTitle">
+      <div class="compare-head">
+        <div>
+          <p class="eyebrow">COMPARE / 交互对照</p>
+          <h2 id="compareTitle">同是沉浸，观看却不同。</h2>
+          <p class="compare-lead">从观看边界到再现方式，逐一拆解两种体验的关键差异。</p>
+        </div>
+        <div class="view-switch" role="group" aria-label="对照视图切换">
+          <button class="active" type="button" data-view="cards" aria-pressed="true">分维度对照</button>
+          <button type="button" data-view="table" aria-pressed="false">总览表格</button>
+        </div>
+      </div>
+      <div class="dimension-tabs" id="dimensionTabs" role="tablist" aria-label="比较维度"></div>
+      <div class="compare-body" id="compareBody"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="shortcuts">键盘：<kbd>←</kbd> <kbd>→</kbd> 翻页 · <kbd>空格</kbd> 播放/暂停 · <kbd>F</kbd> 全屏 · <kbd>Esc</kbd> 关闭放大</p>
+    <p>纯静态站点，无需构建 · 可直接部署到 GitHub Pages 或本地双击打开</p>
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图像放大查看" hidden>
+    <div class="lightbox-bar">
+      <span class="lightbox-label" id="lightboxLabel">01 / 06</span>
+      <div class="lightbox-tools">
+        <button type="button" id="lbZoomOut" aria-label="缩小">−</button>
+        <span class="zoom-value" id="lbZoomValue">100%</span>
+        <button type="button" id="lbZoomIn" aria-label="放大">＋</button>
+        <button type="button" id="lbReset" class="lb-reset">复位</button>
+        <button type="button" id="lbClose" class="lb-close">关闭 ✕</button>
+      </div>
+    </div>
+    <div class="lightbox-stage" id="lightboxStage">
+      <img id="lightboxImage" src="./assets/slide-01.png" alt="放大查看的演示页" draggable="false">
+    </div>
+    <button class="lb-nav prev" id="lbPrev" type="button" aria-label="上一页">‹</button>
+    <button class="lb-nav next" id="lbNext" type="button" aria-label="下一页">›</button>
+    <p class="lightbox-tip">滚轮缩放 · 按住拖动平移 · 方向键翻页 · Esc 关闭</p>
+  </div>
+</body>
+</html>
